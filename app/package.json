@@ -1,0 +1,21 @@
+{
+  "name": "Whatever",
+  "version": "1.0.0",
+  "description": "An unofficial Evernote client for Linux desktop",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/CellarD0-0r/whatever",
+  "keywords": [
+    "Electron",
+    "evernote",
+    "client",
+    "linux"
+  ],
+  "author": "GitHub",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  }
+}
