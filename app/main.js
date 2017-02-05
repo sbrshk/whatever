@@ -1,3 +1,5 @@
+"use strict"
+
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
@@ -12,20 +14,11 @@ const url = require('url')
 let mainWindow
 
 function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  // Create the browser window and disable node.js (it is needed to work with pre-compiled js of external url)
+  mainWindow = new BrowserWindow({width: 800, height: 600, webPreferences: {nodeIntegration: false}})
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-  
-  let contents = mainWindow.webContents
-  //mainWindow.loadURL('https://www.evernote.com')
-  
- // setupWindowEvents(mainWindow)
+  // and load the url
+  mainWindow.loadURL('https://www.evernote.com/Home.action')
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

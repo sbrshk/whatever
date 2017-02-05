@@ -16,6 +16,8 @@
   "author": "GitHub",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.4.1",
+    "electron-open": "^1.0.1",
+    "window-or-global": "^1.0.1"
   }
 }
