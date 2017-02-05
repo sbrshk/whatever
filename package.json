@@ -1,0 +1,25 @@
+{
+  "build": {
+    "appId": "whatever",
+    "win": {
+      "iconUrl": "#",
+	  "noMsi": "false"
+    }
+  },
+  "scripts": {
+    "preinstall": "node -e 'process.exit(0)'",
+    "postinstall": "install-app-deps",
+    "start": "electron ./app",
+    "dev": "NODE_ENV='development' npm run start",
+    "lindist": "build --linux deb --x64",
+    "windist": "build --win --x64"
+  },
+  "devDependencies": {
+    "7zip-bin-win": "^2.0.2",
+    "electron": "^1.4.15",
+    "electron-builder": "^11.4.4",
+    "electron-packager": "^8.5.0",
+    "electron-prebuilt": "^1.4.13",
+    "electron-rebuild": "^1.5.7"
+  }
+}

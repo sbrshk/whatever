@@ -11,9 +11,11 @@
     "Electron",
     "evernote",
     "client",
-    "linux"
+    "linux", 
+    "note",
+    "notes"
   ],
-  "author": "GitHub",
+  "author": "CellarD0-0r <alan.turing39@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "electron": "^1.4.1",
