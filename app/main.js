@@ -19,7 +19,6 @@ function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 600,
                                       height: 400, 
                                       frame: false, 
-                                      backgroundColor: '#2E8B57', 
                                       show: false
     })
     splashScreen.loadURL(url.format({
