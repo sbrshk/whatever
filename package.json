@@ -2,7 +2,7 @@
   "build": {
     "appId": "whatever",
     "win": {
-      "iconUrl": "#",
+      "iconUrl": "https://raw.githubusercontent.com/CellarD0-0r/whatever/master/build/icon.ico",
 	  "noMsi": "false"
     }
   },
