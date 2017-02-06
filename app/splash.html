@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="http://allfont.ru/allfont.css?fonts=annabelle" rel="stylesheet" type="text/css" />
+        <style>
+            .image {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                text-align: center;
+            }
+            
+            .label {
+                margin-top: 50px;
+                font-family: 'Annabelle', arial;
+                font-size: 50px;
+                text-shadow: 10px 10px 10px black;
+            }
+            
+            .label-2 {
+                font-family: 'Annabelle', arial;
+                font-size: 25px;
+                text-shadow: 10px 10px 10px black;
+            }
+            
+            .spinner {
+                height: auto;
+                margin: auto;
+                align-content: center;
+                align-self: center;
+                text-align: center;
+                top: 0; left: 0; bottom: 0; right: 0;
+                border-radius: 50%;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  
+                -webkit-animation: sk-rotateplane 1.5s infinite linear;
+            }
+
+            @-webkit-keyframes sk-rotateplane {
+                to { -webkit-transform: rotate(360deg) }
+    
+            }
+        </style>
+    </head>
+    <body>
+        <div class="image">
+            <p class="label">Whatever</p>
+            <p class="label-2">Keep your notes simple</p>
+            <img class="spinner" src="https://github.com/CellarD0-0r/whatever/blob/master/build/icons/64x64.png?raw=true">
+        </div>
+    </body>
+</html>
