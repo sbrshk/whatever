@@ -1,5 +1,7 @@
 "use strict"
 
+//const icon = require('./splash/256x256.png')
+
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
@@ -11,14 +13,44 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow, splashScreen
+
+function createSplashScreen () {
+    splashScreen = new BrowserWindow({width: 600,
+                                      height: 400, 
+                                      frame: false, 
+                                      backgroundColor: '#2E8B57', 
+                                      show: false
+    })
+    splashScreen.loadURL(url.format({
+    pathname: path.join(__dirname, 'splash.html'),
+    protocol: 'file:',
+    slashes: true
+    }))
+    
+    splashScreen.webContents.on('did-finish-load', () => {
+        splashScreen.show()
+    })
+}
 
 function createWindow () {
+  createSplashScreen()
   // Create the browser window and disable node.js (it is needed to work with pre-compiled js of external url)
-  mainWindow = new BrowserWindow({width: 800, height: 600, webPreferences: {nodeIntegration: false}})
+  mainWindow = new BrowserWindow({width: 800, 
+                                  height: 600, 
+                                  webPreferences: {nodeIntegration: false}, 
+                                  show: false
+                                 })
 
   // and load the url
   mainWindow.loadURL('https://www.evernote.com/Home.action')
+  
+  mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.show()
+      if(splashScreen) {
+          splashScreen.close()
+      }
+  })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
