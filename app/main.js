@@ -42,12 +42,9 @@ function createTray () {
         
     //Create context menu
     const contextMenu = Menu.buildFromTemplate([
-        {label: "Toggle Whatever", click() { 
-            if (!mainWindow) { createWindow() }
-            else {
-                mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
-            }
-            
+        {label: "Open Whatever", click() { createWindow() }},
+        {label: "Toggle window", click() { 
+              if (mainWindow) { mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show() }
         }},
         {type: "separator"},
         //{label: "New note", click() { newNote() }},
