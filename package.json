@@ -17,6 +17,7 @@
     "electron-builder": "^11.4.4",
     "electron-packager": "^8.5.0",
     "electron-prebuilt": "^1.4.13",
-    "electron-rebuild": "^1.5.7"
+    "electron-rebuild": "^1.5.7",
+    "spinkit": "^1.2.5"
   }
 }

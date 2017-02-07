@@ -2,6 +2,7 @@
 <html>
     <head>
         <link href="http://allfont.ru/allfont.css?fonts=annabelle" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="node_modules/spinkit/css/spinkit.css">
         <style>
             .image {
                 top: 0;
@@ -26,42 +27,18 @@
                 text-shadow: 10px 10px 10px black;
             }
             
-            .spinner {
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
-
-  margin: 100px auto;
-  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
-  animation: sk-rotateplane 1.2s infinite ease-in-out;
-}
-
-@-webkit-keyframes sk-rotateplane {
-  0% { -webkit-transform: perspective(120px) }
-  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
-  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
-}
-
-@keyframes sk-rotateplane {
-  0% { 
-    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
-  } 50% { 
-    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
-  } 100% { 
-    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-  }
-}
+            
         </style>
     </head>
     <body>
         <div class="image">
             <p class="label">Whatever</p>
             <p class="label-2">Keep your notes simple</p>
-            <div class="spinner"></div>
-            <!--<img class="spinner" src="https://github.com/CellarD0-0r/whatever/blob/master/build/icons/64x64.png?raw=true">-->
+            <div class="sk-chasing-dots">
+        <div class="sk-child sk-dot1" style="background-color: #fff"></div>
+        <div class="sk-child sk-dot2" style="background-color: #fff"></div>
+      </div>
+            
         </div>
     </body>
 </html>

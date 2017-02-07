@@ -11,7 +11,7 @@
     "Electron",
     "evernote",
     "client",
-    "linux", 
+    "linux",
     "note",
     "notes"
   ],
@@ -20,6 +20,7 @@
   "devDependencies": {
     "electron": "^1.4.1",
     "electron-open": "^1.0.1",
+    "spinkit": "^1.2.5",
     "window-or-global": "^1.0.1"
   }
 }
