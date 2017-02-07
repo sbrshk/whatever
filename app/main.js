@@ -17,7 +17,7 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, settingsWindow, aboutWindow, splashScreen, tray
+let mainWindow, settingsWindow, aboutWindow, splashScreen, tray, contextMenu
 
 function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 600,
@@ -41,14 +41,19 @@ function createTray () {
     tray = new Tray(path.join(__dirname, 'tray/18x18.png'))
         
     //Create context menu
-    const contextMenu = Menu.buildFromTemplate([
-        {label: "Open Whatever", click() { createWindow() }},
-        {label: "Toggle window", click() { 
-              if (mainWindow) { mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show() }
+    contextMenu = Menu.buildFromTemplate([
+        {label: "Open", click() { 
+            createWindow() 
+            contextMenu.items[0].enabled = false
+            contextMenu.items[2].enabled = true
         }},
-        {type: "separator"},
         //{label: "New note", click() { newNote() }},
         {label: "Settings", click() { openSettings() }},
+        {label: "Close", click() { 
+            mainWindow.close()
+            contextMenu.items[0].enabled = true
+            contextMenu.items[2].enabled = false
+        }},
         {label: "Quit", click() { app.quit() }},
         {type: "separator"},
         {label: "About", click() { createAboutWindow() }},
@@ -56,8 +61,9 @@ function createTray () {
             shell.openExternal('https://github.com/CellarD0-0r/whatever')
         }}
     ])
+    
+    contextMenu.items[0].enabled = false
     tray.setContextMenu(contextMenu)
-    tray.setToolTip('Whatever')
 }
 
 function createWindow () {
@@ -73,6 +79,9 @@ function createWindow () {
 
   //load the url
   mainWindow.loadURL('https://www.evernote.com/Home.action')
+  
+  //hide the default menu
+  mainWindow.setMenu(null)
   
   //prevent window title changing
   mainWindow.on('page-title-updated', event => {
@@ -102,6 +111,8 @@ function openSettings () {
     settingsWindow.on('page-title-updated', event => {
         event.preventDefault()
     })
+    
+    settingsWindow.setMenu(null)
 }
 
 function createAboutWindow () {
