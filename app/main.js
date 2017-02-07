@@ -17,7 +17,7 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, splashScreen, tray
+let mainWindow, settingsWindow, aboutWindow, splashScreen, tray
 
 function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 600,
@@ -42,7 +42,13 @@ function createTray () {
         
     //Create context menu
     const contextMenu = Menu.buildFromTemplate([
-        {label: "Open Whatever", click() { createWindow() }},
+        {label: "Toggle Whatever", click() { 
+            if (!mainWindow) { createWindow() }
+            else {
+                mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
+            }
+            
+        }},
         {type: "separator"},
         //{label: "New note", click() { newNote() }},
         {label: "Settings", click() { openSettings() }},
@@ -54,6 +60,7 @@ function createTray () {
         }}
     ])
     tray.setContextMenu(contextMenu)
+    tray.setToolTip('Whatever')
 }
 
 function createWindow () {
@@ -61,16 +68,21 @@ function createWindow () {
   createSplashScreen()
   
   // Create the browser window and disable node.js (it is needed to work with pre-compiled js of external url)
-  mainWindow = new BrowserWindow({width: 800, 
+  mainWindow = new BrowserWindow({width: 900, 
                                   height: 600, 
                                   webPreferences: {nodeIntegration: false}, 
                                   show: false
                                  })
 
-  // and load the url
+  //load the url
   mainWindow.loadURL('https://www.evernote.com/Home.action')
   
-  //mainWindow.webContents.on('did-finish-load', () => {
+  //prevent window title changing
+  mainWindow.on('page-title-updated', event => {
+      event.preventDefault()
+  })
+  
+  //when contents are loaded, show main window and close splash
   mainWindow.once('ready-to-show', () => {
       mainWindow.show()
       if(splashScreen) {
@@ -85,10 +97,14 @@ function createWindow () {
 }
 
 function openSettings () {
-    mainWindow = new BrowserWindow({width: 800, 
-                                  height: 600, 
+    settingsWindow = new BrowserWindow({width: 700, 
+                                  height: 550, 
                                   webPreferences: {nodeIntegration: false}})
-    mainWindow.loadURL('https://www.evernote.com/Settings.action')
+    settingsWindow.loadURL('https://www.evernote.com/Settings.action')
+    
+    settingsWindow.on('page-title-updated', event => {
+        event.preventDefault()
+    })
 }
 
 function createAboutWindow () {
