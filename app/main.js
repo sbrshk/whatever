@@ -44,7 +44,8 @@ function createWindow () {
   // and load the url
   mainWindow.loadURL('https://www.evernote.com/Home.action')
   
-  mainWindow.webContents.on('did-finish-load', () => {
+  //mainWindow.webContents.on('did-finish-load', () => {
+  mainWindow.once('ready-to-show', () => {
       mainWindow.show()
       if(splashScreen) {
           splashScreen.close()
