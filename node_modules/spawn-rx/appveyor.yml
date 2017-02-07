@@ -1,0 +1,19 @@
+
+platform:
+  - x64
+
+environment:
+  matrix:
+    - nodejs_version: "6"
+    - nodejs_version: "5"
+    - nodejs_version: "4"
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - npm install
+
+test_script:
+  # run tests
+  - npm test
+
+build: off
