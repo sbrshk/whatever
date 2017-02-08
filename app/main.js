@@ -43,17 +43,10 @@ function createTray () {
     //Create context menu
     contextMenu = Menu.buildFromTemplate([
         {label: "Open", click() { 
-            createWindow() 
-            contextMenu.items[0].enabled = false
-            contextMenu.items[2].enabled = true
+            if ( mainWindow === null ) { createWindow() }
         }},
         //{label: "New note", click() { newNote() }},
         {label: "Settings", click() { openSettings() }},
-        {label: "Close", click() { 
-            mainWindow.close()
-            contextMenu.items[0].enabled = true
-            contextMenu.items[2].enabled = false
-        }},
         {label: "Quit", click() { app.quit() }},
         {type: "separator"},
         {label: "About", click() { createAboutWindow() }},
@@ -61,8 +54,7 @@ function createTray () {
             shell.openExternal('https://github.com/CellarD0-0r/whatever')
         }}
     ])
-    
-    contextMenu.items[0].enabled = false
+
     tray.setContextMenu(contextMenu)
 }
 
@@ -98,7 +90,7 @@ function createWindow () {
 
   // Emitted when the window is closed.
   mainWindow.on('close', function () {
-    if (mainWindow) { mainWindow.hide() }
+    mainWindow = null
   })
 }
 
