@@ -42,14 +42,13 @@ function createTray () {
         
     //Create context menu
     contextMenu = Menu.buildFromTemplate([
-        {label: "Open", click() { 
+        {label: "Open Whatever", click() { 
             if ( mainWindow === null ) { createWindow() }
         }},
         //{label: "New note", click() { newNote() }},
         {label: "Settings", click() { openSettings() }},
         {label: "Quit", click() { app.quit() }},
         {type: "separator"},
-        {label: "About", click() { createAboutWindow() }},
         {label: "GitHub", click() {
             shell.openExternal('https://github.com/CellarD0-0r/whatever')
         }}
@@ -105,10 +104,6 @@ function openSettings () {
     })
     
     settingsWindow.setMenu(null)
-}
-
-function createAboutWindow () {
-    
 }
 
 // This method will be called when Electron has finished
