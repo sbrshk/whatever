@@ -20,13 +20,13 @@ const url = require('url')
 let mainWindow, settingsWindow, aboutWindow, splashScreen, tray, contextMenu
 
 function createSplashScreen () {
-    splashScreen = new BrowserWindow({width: 600,
-                                      height: 400, 
+    splashScreen = new BrowserWindow({width: 640,
+                                      height: 480, 
                                       frame: false, 
                                       show: false
     })
     splashScreen.loadURL(url.format({
-    pathname: path.join(__dirname, 'splash.html'),
+    pathname: path.join(__dirname, 'splash/splash.html'),
     protocol: 'file:',
     slashes: true
     }))
