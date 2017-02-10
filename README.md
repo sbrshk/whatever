@@ -10,7 +10,7 @@
     Whereas Evernote Corporation still doesn't support Linux platform, there's a need to piece it out. Using a web version can not always be comfortable for some users, therefore a desktop client can be useful.<br><br>
     <b>Whatever</b> is built with <a href="http://electron.atom.io/">Electron</a> and provides wide enough integration with desktop.<br>
     <h1>Screenshots</h1>
-    <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/splash.png" width="723px"><br>
+    <div><img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/splash.png" width="723px"><br>
     <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/main_window.png" vspace="10" width="723px"><br>
     <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/search.png" height="160px">
     <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/tray.png" hspace="5"><br>
@@ -19,3 +19,4 @@
     <h1>Note</h1>
     <p>This software is 100% free, non-commercial, independent and unofficial. It is <b>not</b> supported by Evernote&copy; Corporation or any other commercial organization. <br>
     Use it on your own risk.</p>
+</div>
