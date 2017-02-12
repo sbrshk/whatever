@@ -10,7 +10,7 @@
 <b>Whatever</b> is a lightweight unofficial Evernote&copy; client for Linux desktop.<br><br>
     Whereas Evernote Corporation still doesn't support Linux platform, there's a need to piece it out. Using a web version can not always be comfortable, therefore there's nothing that can be more useful than a desktop client.<br>
     <br>
-    <b>Whatever</b> is a third-party app built with <a href="http://electron.atom.io/">Electron</a>. It provides wide enough integration with desktop, such as dock and tray icons and background working mode. Withal, it affords all functionality that is represented in the web version.<br><br>
+    <b>Whatever</b> is built with <a href="http://electron.atom.io/">Electron</a>. It provides wide enough integration with desktop, such as dock and tray icons and background working mode. Withal, it affords all functionality that is represented in the web version.<br><br>
     <h1>Screenshots</h1>
     <div><img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/splash.png" width="723px"><br>
     <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/main_window.png" vspace="10" width="723px"><br>
