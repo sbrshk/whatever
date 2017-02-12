@@ -4,7 +4,9 @@
 <h1 align="center" style="font-family: 'Annabelle', arial; font-size: 50px; text-shadow: 5px 5px 5px #aaa">Whatever</h1>
 <p align="center"><a href="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/License.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
 <a href="https://github.com/CellarD0-0r/whatever/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/Platform-Linux-lightgrey.svg"></a> 
-<img src="https://img.shields.io/github/downloads/CellarD0-0r/whatever/total.svg">
+<img src="https://img.shields.io/github/downloads/CellarD0-0r/whatever/total.svg"><br>
+<img src="https://scrutinizer-ci.com/g/CellarD0-0r/whatever/badges/build.png?b=master">
+<img src="https://scrutinizer-ci.com/g/CellarD0-0r/whatever/badges/quality-score.png?b=master">
 <a href="https://codeclimate.com/github/CellarD0-0r/whatever"><img src="https://codeclimate.com/github/CellarD0-0r/whatever/badges/gpa.svg" /></a><br>
 </p>
 </p>
