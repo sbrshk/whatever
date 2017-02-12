@@ -3,9 +3,10 @@
 <p align="center"><img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/app/splash/splash_background.png" width="60%">
 <h1 align="center" style="font-family: 'Annabelle', arial; font-size: 50px; text-shadow: 5px 5px 5px #aaa">Whatever</h1>
 <p align="center"><a href="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/License.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
-<a href="https://github.com/CellarD0-0r/whatever/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/Platform-Linux-lightgrey.svg"></a> <img src="https://img.shields.io/github/downloads/CellarD0-0r/whatever/total.svg">
+<a href="https://github.com/CellarD0-0r/whatever/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/Platform-Linux-lightgrey.svg"></a> 
+<img src="https://img.shields.io/github/downloads/CellarD0-0r/whatever/total.svg">
 <a href="https://codeclimate.com/github/CellarD0-0r/whatever"><img src="https://codeclimate.com/github/CellarD0-0r/whatever/badges/gpa.svg" /></a><br>
-<a href="https://sourceforge.net/projects/whatever-evernote-client/files/latest/download" rel="nofollow"><img alt="Download Whatever" src="https://a.fsdn.com/con/app/sf-download-button"></a></p>
+</p>
 </p>
 <h1>About</h1>
 <b>Whatever</b> is a lightweight unofficial Evernote&copy; client for Linux desktop.<br><br>
@@ -18,7 +19,7 @@
     <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/search.png" height="160px">
     <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/tray.png" hspace="5"><br>
     <h1>Download</h1>
-    <a href="https://github.com/CellarD0-0r/whatever/releases/tag/v1.0.0">v1.0.0</a>
+    <a href="https://sourceforge.net/projects/whatever-evernote-client/files/latest/download" rel="nofollow"><img alt="Download Whatever" src="https://a.fsdn.com/con/app/sf-download-button"></a>
     <h1>License</h1>
     <p>MIT &copy; 2017 <a href="https://github.com/CellarD0-0r">Sophya B.</a></p><br>
     <h1>Note</h1>
