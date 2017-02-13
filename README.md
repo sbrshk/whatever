@@ -22,7 +22,7 @@
     <img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/screenshots/tray.png" hspace="5"><br>
     <h1>Download</h1>
     <a href="https://sourceforge.net/projects/whatever-evernote-client/files/latest/download" rel="nofollow"><img alt="Download Whatever" src="https://a.fsdn.com/con/app/sf-download-button"></a><br>
-    <p><a href="https://sourceforge.net/p/whatever-evernote-client/" rel="nofollow"><img alt="Download Whatever" src="https://sourceforge.net/sflogo.php?type=10&group_id=2813421"></a> <a href="https://sourceforge.net/projects/whatever-evernote-client/files/latest/download" rel="nofollow"><img alt="Download Whatever" src="https://img.shields.io/sourceforge/dt/whatever-evernote-client.svg"></a></p>
+    <a href="https://sourceforge.net/p/whatever-evernote-client/" rel="nofollow"><img alt="Download Whatever" src="https://sourceforge.net/sflogo.php?type=10&group_id=2813421"></a><a href="https://sourceforge.net/projects/whatever-evernote-client/files/latest/download" rel="nofollow"><img alt="Download Whatever" src="https://img.shields.io/sourceforge/dt/whatever-evernote-client.svg"></a>
     <h1>License</h1>
     <p>MIT &copy; 2017 <a href="https://github.com/CellarD0-0r">Sophya B.</a></p><br>
     <h1>Note</h1>
