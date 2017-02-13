@@ -2,19 +2,24 @@
   "build": {
     "appId": "whatever"
   },
+  "win": {
+    "iconUrl": "https://raw.githubusercontent.com/CellarD0-0r/whatever/master/build/icon.png",
+    "noMsi": "false"
+  },
   "repository": "https://github.com/CellarD0-0r/whatever",
   "license": "MIT",
   "description": "An unofficial Evernote client for Linux desktop",
   "scripts": {
     "preinstall": "node -e 'process.exit(0)'",
-    "postinstall": "install-app-deps",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "build --linux deb rpm tar.gz --ia32 --x64"
+    "lindist": "build --linux deb rpm tar.gz --ia32 --x64",
+    "windist": "build --win --x64"
   },
   "devDependencies": {
+    "7zip-bin-win": "^2.0.2",
     "electron": "^1.4.15",
-    "electron-builder": "^11.4.4",
+    "electron-builder": "^11.7.0",
     "electron-packager": "^8.5.0",
     "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.5.7",
