@@ -17,7 +17,7 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, settingsWindow, aboutWindow, splashScreen, tray, contextMenu
+let mainWindow, settingsWindow, splashScreen, tray, contextMenu
 
 function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 640,
