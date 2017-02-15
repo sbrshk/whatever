@@ -26,6 +26,5 @@
     <h1>License</h1>
     <p>MIT &copy; 2017 <a href="https://github.com/CellarD0-0r">Sophya B.</a></p><br>
     <h1>Note</h1>
-    <p>This software is 100% free, non-commercial, independent and unofficial. It is <b>not</b> supported by Evernote&copy; Corporation or any other commercial organization. <br>
-    Use it on your own risk.</p>
+    <p>This software is 100% free, non-commercial, independent and unofficial. It is <b>not</b> supported by Evernote&copy; Corporation or any other commercial organization.</p>
 </div>
