@@ -17,7 +17,7 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, settingsWindow, splashScreen, tray, contextMenu
+let mainWindow, settingsWindow, configWindow, splashScreen, tray, contextMenu
 
 function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 640,
@@ -46,7 +46,8 @@ function createTray () {
             if ( mainWindow === null ) { createWindow() }
         }},
         //{label: "New note", click() { newNote() }},
-        {label: "Settings", click() { openSettings() }},
+        {label: "Account settings", click() { openSettings() }},
+        {label: "App settings", click() { openConfig() }},
         {label: "Quit", click() { app.quit() }},
         {type: "separator"},
         {label: "GitHub", click() {
@@ -104,6 +105,19 @@ function openSettings () {
     })
     
     settingsWindow.setMenu(null)
+}
+
+function openConfig () {
+    configWindow = new BrowserWindow({width: 600,
+                                      height: 400,
+                                      title: "Settings"
+    })
+    
+    configWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+    }))
 }
 
 // This method will be called when Electron has finished
