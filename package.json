@@ -18,6 +18,7 @@
     "electron-packager": "^8.5.0",
     "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.5.7",
+    "jquery": "^3.1.1",
     "spinkit": "^1.2.5"
   }
 }

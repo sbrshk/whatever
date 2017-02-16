@@ -92,6 +92,13 @@ function createWindow () {
   mainWindow.on('close', function () {
     mainWindow = null
   })
+  
+  mainWindow.webContents.on('new-window', (event, url) => {
+  // stop Electron from opening another BrowserWindow
+  event.preventDefault()
+  // open the url in the default system browser
+  shell.openExternal(url)
+})
 }
 
 function openSettings () {
@@ -114,10 +121,12 @@ function openConfig () {
     })
     
     configWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, 'config/config.html'),
     protocol: 'file:',
     slashes: true
     }))
+    
+    configWindow.setMenu(null)
 }
 
 // This method will be called when Electron has finished
