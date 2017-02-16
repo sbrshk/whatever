@@ -38,6 +38,7 @@ var validate = module.exports = function (rawSchemas, args) {
     if (/E/.test(schema)) {
       addSchema(schema.replace(/E.*$/, 'E'))
       addSchema(schema.replace(/E/, 'Z'))
+      if (schema.length === 1) addSchema('')
     }
   })
   var matching = arity[args.length]

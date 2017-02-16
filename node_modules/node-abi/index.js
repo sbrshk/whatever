@@ -40,7 +40,7 @@ function getAbi (target, runtime) {
     if (/^0\.[2-8]/.test(target)) return '1'
   }
 
-  throw new Error('Could not detect abi for version ' + target + ' and runtime ' + runtime)
+  throw new Error('Could not detect abi for version ' + target + ' and runtime ' + runtime + '.  Updating "node-abi" might help solve this issue if it is a new release of ' + runtime)
 }
 
 function getTarget (abi, runtime) {

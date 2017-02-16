@@ -316,6 +316,9 @@ var Subscription = (function () {
          * @type {boolean}
          */
         this.closed = false;
+        this._parent = null;
+        this._parents = null;
+        this._subscriptions = null;
         if (unsubscribe) {
             this._unsubscribe = unsubscribe;
         }
@@ -332,9 +335,23 @@ var Subscription = (function () {
         if (this.closed) {
             return;
         }
+        var _a = this, _parent = _a._parent, _parents = _a._parents, _unsubscribe = _a._unsubscribe, _subscriptions = _a._subscriptions;
         this.closed = true;
-        var _a = this, _unsubscribe = _a._unsubscribe, _subscriptions = _a._subscriptions;
+        this._parent = null;
+        this._parents = null;
+        // null out _subscriptions first so any child subscriptions that attempt
+        // to remove themselves from this subscription will noop
         this._subscriptions = null;
+        var index = -1;
+        var len = _parents ? _parents.length : 0;
+        // if this._parent is null, then so is this._parents, and we
+        // don't have to remove ourselves from any parent subscriptions.
+        while (_parent) {
+            _parent.remove(this);
+            // if this._parents is null or index >= len,
+            // then _parent is set to null, and the loop exits
+            _parent = ++index < len && _parents[index] || null;
+        }
         if (isFunction(_unsubscribe)) {
             var trial = tryCatch(_unsubscribe).call(this);
             if (trial === errorObject) {
@@ -344,8 +361,8 @@ var Subscription = (function () {
             }
         }
         if (isArray(_subscriptions)) {
-            var index = -1;
-            var len = _subscriptions.length;
+            index = -1;
+            len = _subscriptions.length;
             while (++index < len) {
                 var sub = _subscriptions[index];
                 if (isObject(sub)) {
@@ -393,26 +410,31 @@ var Subscription = (function () {
         if (teardown === this) {
             return this;
         }
-        var sub = teardown;
+        var subscription = teardown;
         switch (typeof teardown) {
             case 'function':
-                sub = new Subscription(teardown);
+                subscription = new Subscription(teardown);
             case 'object':
-                if (sub.closed || typeof sub.unsubscribe !== 'function') {
-                    return sub;
+                if (subscription.closed || typeof subscription.unsubscribe !== 'function') {
+                    return subscription;
                 }
                 else if (this.closed) {
-                    sub.unsubscribe();
-                    return sub;
+                    subscription.unsubscribe();
+                    return subscription;
+                }
+                else if (typeof subscription._addParent !== 'function' /* quack quack */) {
+                    var tmp = subscription;
+                    subscription = new Subscription();
+                    subscription._subscriptions = [tmp];
                 }
                 break;
             default:
                 throw new Error('unrecognized teardown ' + teardown + ' added to Subscription.');
         }
-        var childSub = new ChildSubscription(sub, this);
-        this._subscriptions = this._subscriptions || [];
-        this._subscriptions.push(childSub);
-        return childSub;
+        var subscriptions = this._subscriptions || (this._subscriptions = []);
+        subscriptions.push(subscription);
+        subscription._addParent(this);
+        return subscription;
     };
     /**
      * Removes a Subscription from the internal list of subscriptions that will
@@ -421,10 +443,6 @@ var Subscription = (function () {
      * @return {void}
      */
     Subscription.prototype.remove = function (subscription) {
-        // HACK: This might be redundant because of the logic in `add()`
-        if (subscription == null || (subscription === this) || (subscription === Subscription.EMPTY)) {
-            return;
-        }
         var subscriptions = this._subscriptions;
         if (subscriptions) {
             var subscriptionIndex = subscriptions.indexOf(subscription);
@@ -433,26 +451,29 @@ var Subscription = (function () {
             }
         }
     };
+    Subscription.prototype._addParent = function (parent) {
+        var _a = this, _parent = _a._parent, _parents = _a._parents;
+        if (!_parent || _parent === parent) {
+            // If we don't have a parent, or the new parent is the same as the
+            // current parent, then set this._parent to the new parent.
+            this._parent = parent;
+        }
+        else if (!_parents) {
+            // If there's already one parent, but not multiple, allocate an Array to
+            // store the rest of the parent Subscriptions.
+            this._parents = [parent];
+        }
+        else if (_parents.indexOf(parent) === -1) {
+            // Only add the new parent to the _parents list if it's not already there.
+            _parents.push(parent);
+        }
+    };
     Subscription.EMPTY = (function (empty) {
         empty.closed = true;
         return empty;
     }(new Subscription()));
     return Subscription;
 }());
-var ChildSubscription = (function (_super) {
-    __extends(ChildSubscription, _super);
-    function ChildSubscription(_innerSub, _parent) {
-        _super.call(this);
-        this._innerSub = _innerSub;
-        this._parent = _parent;
-    }
-    ChildSubscription.prototype._unsubscribe = function () {
-        var _a = this, _innerSub = _a._innerSub, _parent = _a._parent;
-        _parent.remove(this);
-        _innerSub.unsubscribe();
-    };
-    return ChildSubscription;
-}(Subscription));
 function flattenUnsubscriptionErrors(errors) {
     return errors.reduce(function (errs, err) { return errs.concat((err instanceof UnsubscriptionError) ? err.errors : err); }, []);
 }
@@ -592,6 +613,17 @@ var Subscriber = (function (_super) {
         this.destination.complete();
         this.unsubscribe();
     };
+    Subscriber.prototype._unsubscribeAndRecycle = function () {
+        var _a = this, _parent = _a._parent, _parents = _a._parents;
+        this._parent = null;
+        this._parents = null;
+        this.unsubscribe();
+        this.closed = false;
+        this.isStopped = false;
+        this._parent = _parent;
+        this._parents = _parents;
+        return this;
+    };
     return Subscriber;
 }(Subscription));
 /**
@@ -601,9 +633,9 @@ var Subscriber = (function (_super) {
  */
 var SafeSubscriber = (function (_super) {
     __extends(SafeSubscriber, _super);
-    function SafeSubscriber(_parent, observerOrNext, error, complete) {
+    function SafeSubscriber(_parentSubscriber, observerOrNext, error, complete) {
         _super.call(this);
-        this._parent = _parent;
+        this._parentSubscriber = _parentSubscriber;
         var next;
         var context = this;
         if (isFunction(observerOrNext)) {
@@ -626,49 +658,49 @@ var SafeSubscriber = (function (_super) {
     }
     SafeSubscriber.prototype.next = function (value) {
         if (!this.isStopped && this._next) {
-            var _parent = this._parent;
-            if (!_parent.syncErrorThrowable) {
+            var _parentSubscriber = this._parentSubscriber;
+            if (!_parentSubscriber.syncErrorThrowable) {
                 this.__tryOrUnsub(this._next, value);
             }
-            else if (this.__tryOrSetError(_parent, this._next, value)) {
+            else if (this.__tryOrSetError(_parentSubscriber, this._next, value)) {
                 this.unsubscribe();
             }
         }
     };
     SafeSubscriber.prototype.error = function (err) {
         if (!this.isStopped) {
-            var _parent = this._parent;
+            var _parentSubscriber = this._parentSubscriber;
             if (this._error) {
-                if (!_parent.syncErrorThrowable) {
+                if (!_parentSubscriber.syncErrorThrowable) {
                     this.__tryOrUnsub(this._error, err);
                     this.unsubscribe();
                 }
                 else {
-                    this.__tryOrSetError(_parent, this._error, err);
+                    this.__tryOrSetError(_parentSubscriber, this._error, err);
                     this.unsubscribe();
                 }
             }
-            else if (!_parent.syncErrorThrowable) {
+            else if (!_parentSubscriber.syncErrorThrowable) {
                 this.unsubscribe();
                 throw err;
             }
             else {
-                _parent.syncErrorValue = err;
-                _parent.syncErrorThrown = true;
+                _parentSubscriber.syncErrorValue = err;
+                _parentSubscriber.syncErrorThrown = true;
                 this.unsubscribe();
             }
         }
     };
     SafeSubscriber.prototype.complete = function () {
         if (!this.isStopped) {
-            var _parent = this._parent;
+            var _parentSubscriber = this._parentSubscriber;
             if (this._complete) {
-                if (!_parent.syncErrorThrowable) {
+                if (!_parentSubscriber.syncErrorThrowable) {
                     this.__tryOrUnsub(this._complete);
                     this.unsubscribe();
                 }
                 else {
-                    this.__tryOrSetError(_parent, this._complete);
+                    this.__tryOrSetError(_parentSubscriber, this._complete);
                     this.unsubscribe();
                 }
             }
@@ -698,10 +730,10 @@ var SafeSubscriber = (function (_super) {
         return false;
     };
     SafeSubscriber.prototype._unsubscribe = function () {
-        var _parent = this._parent;
+        var _parentSubscriber = this._parentSubscriber;
         this._context = null;
-        this._parent = null;
-        _parent.unsubscribe();
+        this._parentSubscriber = null;
+        _parentSubscriber.unsubscribe();
     };
     return SafeSubscriber;
 }(Subscriber));
@@ -1130,11 +1162,12 @@ var AsyncSubject = (function (_super) {
  */
 var BoundCallbackObservable = (function (_super) {
     __extends(BoundCallbackObservable, _super);
-    function BoundCallbackObservable(callbackFunc, selector, args, scheduler) {
+    function BoundCallbackObservable(callbackFunc, selector, args, context, scheduler) {
         _super.call(this);
         this.callbackFunc = callbackFunc;
         this.selector = selector;
         this.args = args;
+        this.context = context;
         this.scheduler = scheduler;
     }
     /* tslint:enable:max-line-length */
@@ -1148,16 +1181,29 @@ var BoundCallbackObservable = (function (_super) {
      * `bindCallback` is not an operator because its input and output are not
      * Observables. The input is a function `func` with some parameters, but the
      * last parameter must be a callback function that `func` calls when it is
-     * done. The output of `bindCallback` is a function that takes the same
+     * done.
+     *
+     * The output of `bindCallback` is a function that takes the same
      * parameters as `func`, except the last one (the callback). When the output
      * function is called with arguments, it will return an Observable where the
      * results will be delivered to.
+     *
+     * If `func` depends on some context (`this` property), that context will be set
+     * to the same context that returned function has at call time. In particular, if `func`
+     * is usually called as method of some object, in order to preserve proper behaviour,
+     * it is recommended to set context of output function to that object as well,
+     * provided `func` is not already bound.
      *
      * @example <caption>Convert jQuery's getJSON to an Observable API</caption>
      * // Suppose we have jQuery.getJSON('/my/url', callback)
      * var getJSONAsObservable = Rx.Observable.bindCallback(jQuery.getJSON);
      * var result = getJSONAsObservable('/my/url');
      * result.subscribe(x => console.log(x), e => console.error(e));
+     *
+     * @example <caption>Use bindCallback on object method</caption>
+     * const boundMethod = Rx.Observable.bindCallback(someObject.methodWithCallback);
+     * boundMethod.call(someObject) // make sure methodWithCallback has access to someObject
+     * .subscribe(subscriber);
      *
      * @see {@link bindNodeCallback}
      * @see {@link from}
@@ -1181,7 +1227,7 @@ var BoundCallbackObservable = (function (_super) {
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i - 0] = arguments[_i];
             }
-            return new BoundCallbackObservable(func, selector, args, scheduler);
+            return new BoundCallbackObservable(func, selector, args, this, scheduler);
         };
     };
     BoundCallbackObservable.prototype._subscribe = function (subscriber) {
@@ -1216,7 +1262,7 @@ var BoundCallbackObservable = (function (_super) {
                 };
                 // use named function instance to avoid closure.
                 handler.source = this;
-                var result = tryCatch(callbackFunc).apply(this, args.concat(handler));
+                var result = tryCatch(callbackFunc).apply(this.context, args.concat(handler));
                 if (result === errorObject) {
                     subject.error(errorObject.e);
                 }
@@ -1224,12 +1270,12 @@ var BoundCallbackObservable = (function (_super) {
             return subject.subscribe(subscriber);
         }
         else {
-            return scheduler.schedule(BoundCallbackObservable.dispatch, 0, { source: this, subscriber: subscriber });
+            return scheduler.schedule(BoundCallbackObservable.dispatch, 0, { source: this, subscriber: subscriber, context: this.context });
         }
     };
     BoundCallbackObservable.dispatch = function (state) {
         var self = this;
-        var source = state.source, subscriber = state.subscriber;
+        var source = state.source, subscriber = state.subscriber, context = state.context;
         var callbackFunc = source.callbackFunc, args = source.args, scheduler = source.scheduler;
         var subject = source.subject;
         if (!subject) {
@@ -1257,7 +1303,7 @@ var BoundCallbackObservable = (function (_super) {
             };
             // use named function to pass values in without closure
             handler.source = source;
-            var result = tryCatch(callbackFunc).apply(this, args.concat(handler));
+            var result = tryCatch(callbackFunc).apply(context, args.concat(handler));
             if (result === errorObject) {
                 subject.error(errorObject.e);
             }
@@ -1287,11 +1333,12 @@ Observable.bindCallback = bindCallback;
  */
 var BoundNodeCallbackObservable = (function (_super) {
     __extends(BoundNodeCallbackObservable, _super);
-    function BoundNodeCallbackObservable(callbackFunc, selector, args, scheduler) {
+    function BoundNodeCallbackObservable(callbackFunc, selector, args, context, scheduler) {
         _super.call(this);
         this.callbackFunc = callbackFunc;
         this.selector = selector;
         this.args = args;
+        this.context = context;
         this.scheduler = scheduler;
     }
     /* tslint:enable:max-line-length */
@@ -1307,10 +1354,15 @@ var BoundNodeCallbackObservable = (function (_super) {
      * last parameter must be a callback function that `func` calls when it is
      * done. The callback function is expected to follow Node.js conventions,
      * where the first argument to the callback is an error, while remaining
-     * arguments are the callback result. The output of `bindNodeCallback` is a
+     * arguments are the callback result.
+     *
+     * The output of `bindNodeCallback` is a
      * function that takes the same parameters as `func`, except the last one (the
      * callback). When the output function is called with arguments, it will
      * return an Observable where the results will be delivered to.
+     *
+     * As in {@link bindCallback}, context (`this` property) of input function will be set to context
+     * of returned function, when it is called.
      *
      * @example <caption>Read a file from the filesystem and get the data as an Observable</caption>
      * import * as fs from 'fs';
@@ -1341,7 +1393,7 @@ var BoundNodeCallbackObservable = (function (_super) {
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i - 0] = arguments[_i];
             }
-            return new BoundNodeCallbackObservable(func, selector, args, scheduler);
+            return new BoundNodeCallbackObservable(func, selector, args, this, scheduler);
         };
     };
     BoundNodeCallbackObservable.prototype._subscribe = function (subscriber) {
@@ -1380,7 +1432,7 @@ var BoundNodeCallbackObservable = (function (_super) {
                 };
                 // use named function instance to avoid closure.
                 handler.source = this;
-                var result = tryCatch(callbackFunc).apply(this, args.concat(handler));
+                var result = tryCatch(callbackFunc).apply(this.context, args.concat(handler));
                 if (result === errorObject) {
                     subject.error(errorObject.e);
                 }
@@ -1388,14 +1440,14 @@ var BoundNodeCallbackObservable = (function (_super) {
             return subject.subscribe(subscriber);
         }
         else {
-            return scheduler.schedule(dispatch, 0, { source: this, subscriber: subscriber });
+            return scheduler.schedule(dispatch, 0, { source: this, subscriber: subscriber, context: this.context });
         }
     };
     return BoundNodeCallbackObservable;
 }(Observable));
 function dispatch(state) {
     var self = this;
-    var source = state.source, subscriber = state.subscriber;
+    var source = state.source, subscriber = state.subscriber, context = state.context;
     // XXX: cast to `any` to access to the private field in `source`.
     var _a = source, callbackFunc = _a.callbackFunc, args = _a.args, scheduler = _a.scheduler;
     var subject = source.subject;
@@ -1428,7 +1480,7 @@ function dispatch(state) {
         };
         // use named function to pass values in without closure
         handler.source = source;
-        var result = tryCatch(callbackFunc).apply(this, args.concat(handler));
+        var result = tryCatch(callbackFunc).apply(context, args.concat(handler));
         if (result === errorObject) {
             subject.error(errorObject.e);
         }
@@ -2967,15 +3019,12 @@ var ObserveOnSubscriber = (function (_super) {
         this.delay = delay;
     }
     ObserveOnSubscriber.dispatch = function (arg) {
-        var notification = arg.notification, destination = arg.destination, subscription = arg.subscription;
+        var notification = arg.notification, destination = arg.destination;
         notification.observe(destination);
-        if (subscription) {
-            subscription.unsubscribe();
-        }
+        this.unsubscribe();
     };
     ObserveOnSubscriber.prototype.scheduleMessage = function (notification) {
-        var message = new ObserveOnMessage(notification, this.destination);
-        message.subscription = this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, message));
+        this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
     };
     ObserveOnSubscriber.prototype._next = function (value) {
         this.scheduleMessage(Notification.createNext(value));
@@ -6502,9 +6551,7 @@ var CatchSubscriber = (function (_super) {
                 _super.prototype.error.call(this, err2);
                 return;
             }
-            this.unsubscribe();
-            this.closed = false;
-            this.isStopped = false;
+            this._unsubscribeAndRecycle();
             this.add(subscribeToResult(this, result));
         }
     };
@@ -10945,10 +10992,7 @@ var RepeatSubscriber = (function (_super) {
             else if (count > -1) {
                 this.count = count - 1;
             }
-            this.unsubscribe();
-            this.isStopped = false;
-            this.closed = false;
-            source.subscribe(this);
+            source.subscribe(this._unsubscribeAndRecycle());
         }
     };
     return RepeatSubscriber;
@@ -10998,8 +11042,8 @@ var RepeatWhenSubscriber = (function (_super) {
         this.sourceIsBeingSubscribedTo = true;
     }
     RepeatWhenSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
-        this.source.subscribe(this);
         this.sourceIsBeingSubscribedTo = true;
+        this.source.subscribe(this);
     };
     RepeatWhenSubscriber.prototype.notifyComplete = function (innerSub) {
         if (this.sourceIsBeingSubscribedTo === false) {
@@ -11015,7 +11059,7 @@ var RepeatWhenSubscriber = (function (_super) {
             else if (this.retriesSubscription.closed) {
                 return _super.prototype.complete.call(this);
             }
-            this.temporarilyUnsubscribe();
+            this._unsubscribeAndRecycle();
             this.notifications.next();
         }
     };
@@ -11031,6 +11075,17 @@ var RepeatWhenSubscriber = (function (_super) {
         }
         this.retries = null;
     };
+    RepeatWhenSubscriber.prototype._unsubscribeAndRecycle = function () {
+        var _a = this, notifications = _a.notifications, retries = _a.retries, retriesSubscription = _a.retriesSubscription;
+        this.notifications = null;
+        this.retries = null;
+        this.retriesSubscription = null;
+        _super.prototype._unsubscribeAndRecycle.call(this);
+        this.notifications = notifications;
+        this.retries = retries;
+        this.retriesSubscription = retriesSubscription;
+        return this;
+    };
     RepeatWhenSubscriber.prototype.subscribeToRetries = function () {
         this.notifications = new Subject();
         var retries = tryCatch(this.notifier)(this.notifications);
@@ -11039,18 +11094,6 @@ var RepeatWhenSubscriber = (function (_super) {
         }
         this.retries = retries;
         this.retriesSubscription = subscribeToResult(this, retries);
-    };
-    RepeatWhenSubscriber.prototype.temporarilyUnsubscribe = function () {
-        var _a = this, notifications = _a.notifications, retries = _a.retries, retriesSubscription = _a.retriesSubscription;
-        this.notifications = null;
-        this.retries = null;
-        this.retriesSubscription = null;
-        this.unsubscribe();
-        this.isStopped = false;
-        this.closed = false;
-        this.notifications = notifications;
-        this.retries = retries;
-        this.retriesSubscription = retriesSubscription;
     };
     return RepeatWhenSubscriber;
 }(OuterSubscriber));
@@ -11109,10 +11152,7 @@ var RetrySubscriber = (function (_super) {
             else if (count > -1) {
                 this.count = count - 1;
             }
-            this.unsubscribe();
-            this.isStopped = false;
-            this.closed = false;
-            source.subscribe(this);
+            source.subscribe(this._unsubscribeAndRecycle());
         }
     };
     return RetrySubscriber;
@@ -11178,8 +11218,7 @@ var RetryWhenSubscriber = (function (_super) {
                 this.errors = null;
                 this.retriesSubscription = null;
             }
-            this.unsubscribe();
-            this.closed = false;
+            this._unsubscribeAndRecycle();
             this.errors = errors;
             this.retries = retries;
             this.retriesSubscription = retriesSubscription;
@@ -11203,9 +11242,7 @@ var RetryWhenSubscriber = (function (_super) {
         this.errors = null;
         this.retries = null;
         this.retriesSubscription = null;
-        this.unsubscribe();
-        this.isStopped = false;
-        this.closed = false;
+        this._unsubscribeAndRecycle();
         this.errors = errors;
         this.retries = retries;
         this.retriesSubscription = retriesSubscription;
