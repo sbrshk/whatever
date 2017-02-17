@@ -13,6 +13,7 @@
     "dist": "build --linux deb rpm tar.gz --ia32 --x64"
   },
   "devDependencies": {
+    "app-module-path": "^2.2.0",
     "electron": "^1.4.15",
     "electron-builder": "^11.4.4",
     "electron-packager": "^8.5.0",

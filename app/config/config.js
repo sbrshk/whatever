@@ -8,3 +8,4 @@ const config = new Config({
     }
 })
 
+module.exports.config = config
