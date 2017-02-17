@@ -11,7 +11,6 @@ const Tray = electron.Tray
 const Menu = electron.Menu 
 
 const shell = electron.shell
-
 const path = require('path')
 const url = require('url')
 

@@ -1,6 +1,6 @@
 {
   "name": "Whatever",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An unofficial Evernote client for Linux desktop",
   "main": "main.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "electron": "^1.4.1",
     "electron-context-menu": "^0.8.0",
     "electron-open": "^1.0.1",
-    "spinkit": "^1.2.5",
-    "window-or-global": "^1.0.1"
+    "spinkit": "^1.2.5"
   }
 }
