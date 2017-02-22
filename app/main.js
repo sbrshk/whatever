@@ -14,7 +14,7 @@ const shell = electron.shell
 const path = require('path')
 const url = require('url')
 
-require('app-module-path').addPath(__dirname);
+//require('app-module-path').addPath(__dirname);
 //const config = require('./config')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -49,7 +49,6 @@ function createTray () {
         }},
         //{label: "New note", click() { newNote() }},
         {label: "Account settings", click() { openSettings() }},
-        {label: "App settings", click() { openConfig() }},
         {label: "Quit", click() { app.quit() }},
         {type: "separator"},
         {label: "GitHub", click() {
