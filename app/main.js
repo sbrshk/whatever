@@ -14,6 +14,8 @@ const shell = electron.shell
 const path = require('path')
 const url = require('url')
 const nconf = require('nconf')
+const autoLaunch = require('auto-launch');
+
 
 //require('app-module-path').addPath(__dirname);
 //const config = require('./config/config.json')
@@ -28,7 +30,22 @@ module.exports = nconf;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow, settingsWindow, configWindow, splashScreen, tray, contextMenu
 
-let backgroundMode = nconf.get('backgroundMode')
+//config
+var backgroundMode = nconf.get('backgroundMode')
+var autoStart = nconf.get('autoStart')
+var colorTheme = nconf.get('colorTheme')
+
+//launch on startup
+if (autoStart) {
+    var appLauncher = new autoLaunch({
+        name: 'Whatever'
+    })
+    
+    appLauncher.isEnabled().then(function (enabled) {
+        if (enabled) return;
+        return appLauncher.enable()
+    })
+}
 
 function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 640,
