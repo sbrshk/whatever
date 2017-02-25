@@ -14,8 +14,14 @@ const DEFAULT_IGNORES = [
 
 function generateIgnores (opts) {
   if (typeof (opts.ignore) !== 'function') {
+    // Avoid a circular require that breaks things
+    const common = require('./common')
+
     if (opts.ignore && !Array.isArray(opts.ignore)) opts.ignore = [opts.ignore]
-    opts.ignore = (opts.ignore) ? opts.ignore.concat(DEFAULT_IGNORES) : DEFAULT_IGNORES
+    opts.ignore = (opts.ignore) ? opts.ignore.concat(DEFAULT_IGNORES) : [].concat(DEFAULT_IGNORES)
+    if (process.platform === 'linux') {
+      opts.ignore.push(common.baseTempDir(opts))
+    }
 
     debug('Ignored path regular expressions:', opts.ignore)
   }

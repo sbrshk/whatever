@@ -199,7 +199,7 @@ class MacApp {
 
     if ((platform === 'all' || platform === 'mas') &&
         osxSignOpt === undefined) {
-      common.warning('WARNING: signing is required for mas builds. Provide the osx-sign option, ' +
+      common.warning('signing is required for mas builds. Provide the osx-sign option, ' +
                      'or manually sign the app later.')
     }
 
@@ -245,7 +245,7 @@ function createSignOpts (properties, platform, app, version, quiet) {
   common.subOptionWarning(signOpts, 'osx-sign', 'version', version, quiet)
 
   if (signOpts.binaries) {
-    common.warning('WARNING: osx-sign.binaries is not an allowed sub-option. Not passing to electron-osx-sign.')
+    common.warning('osx-sign.binaries is not an allowed sub-option. Not passing to electron-osx-sign.')
     delete signOpts.binaries
   }
 

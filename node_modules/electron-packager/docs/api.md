@@ -154,6 +154,7 @@ The following paths are always ignored (*when you aren't using the predicate fun
 described after the list*):
 
 * the directory specified by the [`out`](#out) parameter
+* the temporary directory used to build the Electron app
 * `node_modules/.bin`
 * `node_modules/electron`
 * `node_modules/electron-prebuilt`

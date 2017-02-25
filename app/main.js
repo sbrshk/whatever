@@ -58,6 +58,7 @@ function createTray () {
         }},
         //{label: "New note", click() { newNote() }},
         {label: "Account settings", click() { openSettings() }},
+        {label: "App settings", click() { openConfig() }},
         {label: "Quit", click() { app.quit() }},
         {type: "separator"},
         {label: "GitHub", click() {

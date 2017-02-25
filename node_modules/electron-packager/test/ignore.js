@@ -135,6 +135,23 @@ function createIgnoreImplicitOutDirTest (opts) {
   }
 }
 
+test('generateIgnores ignores the generated temporary directory only on Linux', (t) => {
+  const tmpdir = '/foo/bar'
+  const expected = path.join(tmpdir, 'electron-packager')
+  let opts = {tmpdir}
+
+  ignore.generateIgnores(opts)
+
+  // Array.prototype.includes is added (not behind a feature flag) in Node 6
+  if (process.platform === 'linux') {
+    t.notOk(opts.ignore.indexOf(expected) === -1, 'temporary dir in opts.ignore')
+  } else {
+    t.ok(opts.ignore.indexOf(expected) === -1, 'temporary dir not in opts.ignore')
+  }
+
+  t.end()
+})
+
 test('generateOutIgnores ignores all possible platform/arch permutations', (t) => {
   let ignores = ignore.generateOutIgnores({name: 'test'})
   t.equal(ignores.length, common.platforms.length * common.archs.length)

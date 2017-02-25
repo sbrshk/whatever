@@ -24,7 +24,7 @@ export function zipProto<T, T2, T3, T4, T5, T6>(this: Observable<T>, v2: Observa
 export function zipProto<T, R>(this: Observable<T>, ...observables: Array<ObservableInput<T> | ((...values: Array<T>) => R)>): Observable<R>;
 export function zipProto<T, R>(this: Observable<T>, array: Array<ObservableInput<T>>): Observable<R>;
 export function zipProto<T, TOther, R>(this: Observable<T>, array: Array<ObservableInput<TOther>>, project: (v1: T, ...values: Array<TOther>) => R): Observable<R>;
-/* tslint:disable:max-line-length */
+/* tslint:enable:max-line-length */
 
 /**
  * @param observables
@@ -81,9 +81,9 @@ export function zipStatic<R>(...observables: Array<ObservableInput<any> | ((...v
  *     .subscribe(x => console.log(x));
  *
  * // outputs
- * // { age: 7, name: 'Foo', isDev: true }
- * // { age: 5, name: 'Bar', isDev: true }
- * // { age: 9, name: 'Beer', isDev: false }
+ * // { age: 27, name: 'Foo', isDev: true }
+ * // { age: 25, name: 'Bar', isDev: true }
+ * // { age: 29, name: 'Beer', isDev: false }
  *
  * @param observables
  * @return {Observable<R>}

@@ -14,6 +14,7 @@ export interface WebSocketSubjectConfig {
     WebSocketCtor?: {
         new (url: string, protocol?: string | Array<string>): WebSocket;
     };
+    binaryType?: 'blob' | 'arraybuffer';
 }
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -30,6 +31,7 @@ export declare class WebSocketSubject<T> extends AnonymousSubject<T> {
     WebSocketCtor: {
         new (url: string, protocol?: string | Array<string>): WebSocket;
     };
+    binaryType?: 'blob' | 'arraybuffer';
     private _output;
     resultSelector(e: MessageEvent): any;
     /**

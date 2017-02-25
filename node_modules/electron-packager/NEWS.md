@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## [8.5.2] - 2017-02-19
+
+### Fixed
+
+* Prepend all warning messages with "WARNING:" (#593)
+* Ignore the generated temporary directory on Linux (#596)
+* Prevent app names from ending in " Helper" (#600)
+
 ## [8.5.1] - 2017-01-22
 
 ### Fixed
@@ -321,6 +329,7 @@
 
 For versions prior to 5.2.0, please see `git log`.
 
+[8.5.2]: https://github.com/electron-userland/electron-packager/compare/v8.5.1...v8.5.2
 [8.5.1]: https://github.com/electron-userland/electron-packager/compare/v8.5.0...v8.5.1
 [8.5.0]: https://github.com/electron-userland/electron-packager/compare/v8.4.0...v8.5.0
 [8.4.0]: https://github.com/electron-userland/electron-packager/compare/v8.3.0...v8.4.0

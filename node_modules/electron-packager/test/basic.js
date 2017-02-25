@@ -473,6 +473,19 @@ test('sanitize app name for use in the out directory name', (t) => {
   t.end()
 })
 
+test('cannot build apps where the name ends in " Helper"', (t) => {
+  const opts = {
+    arch: 'x64',
+    dir: path.join(__dirname, 'fixtures', 'el-0374'),
+    name: 'Bad Helper',
+    platform: 'linux'
+  }
+
+  packager(opts, (err) => {
+    t.equal('Application names cannot end in " Helper" due to limitations on macOS', err)
+    t.end()
+  })
+})
 util.testSinglePlatform('infer test using `electron-prebuilt` package', createInferElectronPrebuiltTest)
 util.testSinglePlatform('infer test using `electron` package', createInferElectronTest)
 util.testSinglePlatform('infer missing fields test', createInferMissingFieldsTest)

@@ -1,10 +1,10 @@
-# Contributing to electron-packager
+# Contributing to Electron Packager
 
-electron-packager is a community-driven project. As such, we welcome and encourage all sorts of
+Electron Packager is a community-driven project. As such, we welcome and encourage all sorts of
 contributions. They include, but are not limited to:
 
 - Constructive feedback
-- Questions about usage
+- [Questions about usage](#questions-about-usage)
 - [Bug reports / technical issues](#before-opening-bug-reportstechnical-issues)
 - Documentation changes
 - Feature requests
@@ -13,6 +13,14 @@ contributions. They include, but are not limited to:
 We strongly suggest that before filing an issue, you search through the existing issues to see
 if it has already been filed by someone else.
 
+This project is a part of the Electron ecosystem. As such, all contributions to this project follow
+[Electron's code of conduct](https://github.com/electron/electron/blob/master/CODE_OF_CONDUCT.md)
+where appropriate.
+
+## Questions about usage
+
+If you have questions about usage, we encourage you to visit one of the several [community-driven
+sites](https://github.com/electron/electron#community).
 
 ## Before opening bug reports/technical issues
 

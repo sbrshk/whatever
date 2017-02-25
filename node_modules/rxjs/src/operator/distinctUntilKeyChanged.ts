@@ -4,7 +4,7 @@ import { Observable } from '../Observable';
 /* tslint:disable:max-line-length */
 export function distinctUntilKeyChanged<T>(this: Observable<T>, key: string): Observable<T>;
 export function distinctUntilKeyChanged<T, K>(this: Observable<T>, key: string, compare: (x: K, y: K) => boolean): Observable<T>;
-/* tslint:disable:max-line-length */
+/* tslint:enable:max-line-length */
 
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item,
@@ -57,9 +57,9 @@ export function distinctUntilKeyChanged<T, K>(this: Observable<T>, key: string, 
  * @see {@link distinct}
  * @see {@link distinctUntilChanged}
  *
- * @param {string} key string key for object property lookup on each item.
- * @param {function} [compare] optional comparison function called to test if an item is distinct from the previous item in the source.
- * @return {Observable} an Observable that emits items from the source Observable with distinct values based on the key specified.
+ * @param {string} key String key for object property lookup on each item.
+ * @param {function} [compare] Optional comparison function called to test if an item is distinct from the previous item in the source.
+ * @return {Observable} An Observable that emits items from the source Observable with distinct values based on the key specified.
  * @method distinctUntilKeyChanged
  * @owner Observable
  */
