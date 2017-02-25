@@ -1,0 +1,12 @@
+.DS_Store
+config.json
+test/fixtures/*.json
+!test/fixtures/complete.json
+!test/fixtures/malformed.json
+!test/fixtures/bom.json
+!test/fixtures/no-bom.json
+!test/fixtures/secure.json
+node_modules/
+node_modules/*
+npm-debug.log
+coverage

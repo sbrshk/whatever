@@ -1,11 +1,11 @@
-const Config = reuire('electron-config')
+/*const Config = require('electron-config')
 
 const config = new Config({
     defaults: {
         autoStart: false,
-        backgroundMode: false,
+        backgroundMode: true,
         colorTheme: "classic"
     }
 })
 
-module.exports.config = config
+module.exports.config = config*/

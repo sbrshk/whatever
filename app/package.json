@@ -18,9 +18,13 @@
   "author": "CellarD0-0r <alan.turing39@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "auto-launch": "^5.0.1",
     "electron": "^1.4.1",
+    "electron-config": "^0.2.1",
     "electron-context-menu": "^0.8.0",
     "electron-open": "^1.0.1",
+    "nconf": "^0.8.4",
+    "node-config": "0.0.2",
     "spinkit": "^1.2.5"
   }
 }

@@ -13,18 +13,27 @@ const Menu = electron.Menu
 const shell = electron.shell
 const path = require('path')
 const url = require('url')
+const nconf = require('nconf')
 
 //require('app-module-path').addPath(__dirname);
-//const config = require('./config')
+//const config = require('./config/config.json')
+
+nconf.argv()
+    .env()
+    .file({file: path.join(__dirname, 'config/config.json')});
+
+module.exports = nconf;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow, settingsWindow, configWindow, splashScreen, tray, contextMenu
 
+let backgroundMode = nconf.get('backgroundMode')
+
 function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 640,
                                       height: 480, 
-                                      frame: false, 
+                                      frame: false,
                                       show: false
     })
     splashScreen.loadURL(url.format({
@@ -45,7 +54,7 @@ function createTray () {
     //Create context menu
     contextMenu = Menu.buildFromTemplate([
         {label: "Open Whatever", click() { 
-            if ( mainWindow === null ) { createWindow() }
+            if ( mainWindow == null ) { createWindow() }
         }},
         //{label: "New note", click() { newNote() }},
         {label: "Account settings", click() { openSettings() }},
@@ -61,13 +70,14 @@ function createTray () {
 
 function createWindow () {
   
-  createSplashScreen()
+  
+  if ( !backgroundMode ) { 
+      createSplashScreen() 
   
   // Create the browser window and disable node.js (it is needed to work with pre-compiled js of external url)
   mainWindow = new BrowserWindow({width: 900, 
                                   height: 600, 
-                                  webPreferences: {nodeIntegration: false, 
-                                                  'web-security': false}, 
+                                  webPreferences: {nodeIntegration: false}, 
                                   show: false
                                  })
 
@@ -82,25 +92,33 @@ function createWindow () {
       event.preventDefault()
   })
   
-  //when contents are loaded, show main window and close splash
-  mainWindow.once('ready-to-show', () => {
-      mainWindow.show()
-      if(splashScreen) {
-          splashScreen.close()
-      }
-  })
+  //when contents are loaded, show main window and close splash (if background mode not activated)
+  if ( !backgroundMode ) {
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show()
+        if(splashScreen) {
+            splashScreen.close()
+        }
+    })
+  }
 
   // Emitted when the window is closed.
-  mainWindow.on('close', function () {
-    mainWindow = null
-  })
+  if (mainWindow !== null ) {
+      mainWindow.on('close', function () {
+      mainWindow = null
+    })
+  }
+
+  }
+    
+  if (backgroundMode) { backgroundMode = false }
   
-  mainWindow.webContents.on('new-window', (event, url) => {
+  /*mainWindow.webContents.on('new-window', (event, url) => {
   // stop Electron from opening another BrowserWindow
   event.preventDefault()
   // open the url in the default system browser
   shell.openExternal(url)
-})
+})*/
 }
 
 function openSettings () {
