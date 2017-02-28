@@ -1,5 +1,5 @@
 {
     "autoStart": true,
-    "backgroundMode": false,
+    "backgroundMode": true,
     "colorTheme": "classic"
 }

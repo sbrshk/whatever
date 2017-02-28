@@ -20,32 +20,33 @@ const autoLaunch = require('auto-launch');
 //require('app-module-path').addPath(__dirname);
 //const config = require('./config/config.json')
 
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow, settingsWindow, configWindow, splashScreen, tray, contextMenu
+
+//config
 nconf.argv()
     .env()
     .file({file: path.join(__dirname, 'config/config.json')});
 
 module.exports = nconf;
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, settingsWindow, configWindow, splashScreen, tray, contextMenu
-
-//config
 var backgroundMode = nconf.get('backgroundMode')
 var autoStart = nconf.get('autoStart')
 var colorTheme = nconf.get('colorTheme')
 
 //launch on startup
-if (autoStart) {
+/*if (autoStart) {
     var appLauncher = new autoLaunch({
-        name: 'Whatever'
+        name: 'Whatever',
+        path: '/usr/bin/whatever'
     })
     
     appLauncher.isEnabled().then(function (enabled) {
         if (enabled) return;
         return appLauncher.enable()
     })
-}
+}*/
 
 function createSplashScreen () {
     splashScreen = new BrowserWindow({width: 640,
@@ -88,9 +89,7 @@ function createTray () {
 
 function createWindow () {
   
-  
-  if ( !backgroundMode ) { 
-      createSplashScreen() 
+  createSplashScreen() 
   
   // Create the browser window and disable node.js (it is needed to work with pre-compiled js of external url)
   mainWindow = new BrowserWindow({width: 900, 
@@ -121,15 +120,9 @@ function createWindow () {
   }
 
   // Emitted when the window is closed.
-  if (mainWindow !== null ) {
-      mainWindow.on('close', function () {
-      mainWindow = null
-    })
-  }
-
-  }
-    
-  if (backgroundMode) { backgroundMode = false }
+  mainWindow.on('close', function () {
+        if (mainWindow !== null ) { mainWindow = null }
+  })
   
   /*mainWindow.webContents.on('new-window', (event, url) => {
   // stop Electron from opening another BrowserWindow
@@ -167,14 +160,21 @@ function openConfig () {
     configWindow.setMenu(null)
 }
 
+function launchApp () {
+    createTray()
+    if (!backgroundMode) { createWindow }
+    if (backgroundMode) { backgroundMode = false }
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+//app.on('ready', createWindow)
+app.on('ready', launchApp)
 /*app.on('ready', () => {
     if ( !config.backgroundMode ) { createWindow }
 })*/
-app.on('ready', createTray)
+//app.on('ready', createTray)
 
 // Quit when all windows are closed.
 /*app.on('window-all-closed', function () {
@@ -189,6 +189,6 @@ app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow()
+    launchApp()
   }
 })
