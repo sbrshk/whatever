@@ -1,0 +1,59 @@
+.header {
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Annabelle', arial; 
+    background-color: white;
+}
+
+.subheader {
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    top: 0px;
+    left: 0px;
+    background-image: linear-gradient(to bottom right, #228B22, #008B8B)
+}
+
+.logo {
+    height: 150%;
+    margin-top: 5px;
+    margin-left: 10px;
+    border-radius: 50%;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+    float: left;
+}
+
+.logo-header {
+    top: 0;
+    font-size: 250%;
+}
+
+.text-field {
+    position: absolute;
+    top: 70px;
+    left: 50px;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Annabelle', arial; 
+    color: white;
+    font-size: 200%;
+}
+
+.image {
+    float: right;
+    width: 40%;
+    position: absolute;
+    top: 80px;
+    right: 20px;
+}
+
+.github-link {
+    width: 40px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
