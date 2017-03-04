@@ -16,7 +16,7 @@
     "app-module-path": "^2.2.0",
     "auto-launch": "^5.0.1",
     "electron": "^1.4.15",
-    "electron-builder": "^11.4.4",
+    "electron-builder": "^11.7.0",
     "electron-packager": "^8.5.0",
     "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.5.7",

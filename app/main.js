@@ -25,7 +25,7 @@ const autoLaunch = require('auto-launch');
 let mainWindow, settingsWindow, configWindow, splashScreen, tray, contextMenu
 
 //config
-nconf.argv()
+/*nconf.argv()
     .env()
     .file({file: path.join(__dirname, 'config/config.json')});
 
@@ -33,7 +33,7 @@ module.exports = nconf;
 
 var backgroundMode = nconf.get('backgroundMode')
 var autoStart = nconf.get('autoStart')
-var colorTheme = nconf.get('colorTheme')
+var colorTheme = nconf.get('colorTheme')*/
 
 //launch on startup
 /*if (autoStart) {
@@ -110,14 +110,14 @@ function createWindow () {
   })
   
   //when contents are loaded, show main window and close splash (if background mode not activated)
-  if ( !backgroundMode ) {
+ // if ( !backgroundMode ) {
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
         if(splashScreen) {
             splashScreen.close()
         }
     })
-  }
+  //}
 
   // Emitted when the window is closed.
   mainWindow.on('close', function () {
@@ -162,8 +162,9 @@ function openConfig () {
 
 function launchApp () {
     createTray()
-    if (!backgroundMode) { createWindow }
-    if (backgroundMode) { backgroundMode = false }
+    createWindow()
+    //if (!backgroundMode) { createWindow }
+    //if (backgroundMode) { backgroundMode = false }
 }
 
 // This method will be called when Electron has finished
