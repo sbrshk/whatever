@@ -1,10 +1,14 @@
 .navbar {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: white;
     font-family: 'Annabelle', arial;
     padding: 0;
     margin; 0;
+}
+
+github-link {
+    height: 50px;
 }
 
 .jumbotron {
@@ -13,11 +17,16 @@
 
 .content {
     padding-top: 60px;
-    font-family: 'Annabelle', arial;
+    font-family: sans-serif;
     text-align: center;
 }
 
 .logo {
     width: 100%;
-    padding-top: 20px;
+    padding-top: 30px;
+}
+
+.btn {
+    width: 100pt;
+    font-size: 30pt;
 }
