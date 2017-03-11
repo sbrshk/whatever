@@ -7,18 +7,19 @@
     margin; 0;
 }
 
-github-link {
+.github-link {
     height: 50px;
 }
 
 .jumbotron {
     background-image: linear-gradient(to top left, #008B8B, #228B22);
+    font-family: 'Open Sans Light', arial;
 }
 
 .content {
     padding-top: 60px;
-    font-family: sans-serif;
     text-align: center;
+    color: white;
 }
 
 .logo {
@@ -29,4 +30,6 @@ github-link {
 .btn {
     width: 100pt;
     font-size: 30pt;
+    color: black;
 }
+

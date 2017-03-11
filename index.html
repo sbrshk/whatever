@@ -5,10 +5,23 @@
         <link rel="icon" href="build/icon.png">
         <link rel="stylesheet" href="index.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="spinkit/6-chasing-dots.css" rel="stylesheet">
         <link href="http://allfont.ru/allfont.css?fonts=annabelle" rel="stylesheet" type="text/css" />
+        <link href="http://allfont.ru/allfont.css?fonts=open-sans-light" rel="stylesheet" type="text/css" />
+        <script>
+            function loadPage () {
+                document.getElementById('spiner').style.display = 'none';
+                document.getElementById('wrapper').style.display = 'block';
+            }
+        </script>
     </head>
-    <body>
-        <div class="row-fluid">
+    <body onload="loadPage()">
+        <div id="spinner" class="sk-chasing-dots">
+            <div class="separator"></div>
+            <div class="sk-child sk-dot1"></div>
+            <div class="sk-child sk-dot2"></div>
+        </div>
+        <div id="wrapper" class="row-fluid" style="display: none">
             <nav class="navbar navbar-fixed-top">
                 <div class="container-fluid">
                     <h1>Whatever</h1>
@@ -20,15 +33,15 @@
             <div class="jumbotron">
                 <div class="container">
                     <div class="col-sm-6 content">
-                        <big><h2>Unofficial Evernote client for Linux</h2></big>
+                        <big><h1>Unofficial Evernote client for Linux</h1></big>
                         <br><br><br><br><br>
-                        <a href="#" class="btn btn-lg btn-default">
+                        <a href="https://github.com/CellarD0-0r/whatever/releases/download/v1.0.0/Whatever_1.0.0_amd64.deb" class="btn btn-lg btn-default">
                             <img src="build/deb.png">
                             <br>  download<br> .deb</a>
-                        <a href="#" class="btn btn-lg btn-default">
+                        <a href="https://github.com/CellarD0-0r/whatever/releases/download/v1.0.0/Whatever-1.0.0.rpm" class="btn btn-lg btn-default">
                             <img src="build/red_hat.png">
                             <br>download<br> .rpm</a>
-                        <a href="#" class="btn btn-lg btn-default">
+                        <a href="https://github.com/CellarD0-0r/whatever/releases/download/v1.0.0/Whatever-1.0.0.tar.gz" class="btn btn-lg btn-default">
                             <img src="build/tar.png">
                             <br>download<br> .tar.gz</a>
                     </div>
@@ -38,5 +51,6 @@
         </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        
     </body>
 </html>
