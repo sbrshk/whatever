@@ -70,3 +70,21 @@
     margin-right: 20%;
     text-align: left;
 }
+
+.footer {
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(to top left, #008B8B, #228B22);
+    font-family: 'Open Sans Light', arial;
+    color: white;
+    height: 20%;
+}
+
+.links-footer {
+    text-align: right;
+    margin: 20px;
+}
+
+.label-footer {
+    text-align: center;
+}
