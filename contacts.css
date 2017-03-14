@@ -1,0 +1,11 @@
+.contacts-wrapper {
+    font-family: 'Open Sans Light', arial;
+    margin-top: 70pt;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.icn {
+    width: 30pt;
+    float: left;
+}
