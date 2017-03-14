@@ -14,12 +14,6 @@
     padding: 10px;
 }
 
-.github-link {
-    font-family: 'Open Sans Light', arial;
-    position: absolute;
-    padding: 10px;
-}
-
 .jumbotron {
     background-image: linear-gradient(to top left, #008B8B, #228B22);
     font-family: 'Open Sans Light', arial;
@@ -34,6 +28,7 @@
 .logo {
     width: 100%;
     padding-top: 30px;
+    float: left;
 }
 
 .btn-lg {
@@ -52,4 +47,26 @@
     top: 0;
     left: 0;
     overflow: visible;
+}
+
+.badge-container {
+    text-align: center;
+    font-family: 'Open Sans Light', arial;
+}
+
+.content-wrapper {
+    text-align: center;
+    font-family: 'Open Sans Light', arial;
+}
+
+.item-1 {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: right;
+}
+
+.item-2 {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: left;
 }

@@ -27,10 +27,11 @@
                 <div class="container-fluid navbar-inner">
                     <h1 class="brand pull-left">Whatever</h1>
                     <div class="btn-group pull-right nav-btns">
-                        <a type="button" class="btn navbar-btn btn-default" href="#">Docs</a>
-                        <a type="button" class="btn navbar-btn btn-default" href="#">Releases</a>
-                        <a type="button" class="btn navbar-btn btn-default" href="#">Contact</a>
-                        <a type="button" class="btn btn-default navbar-btn github-link" href="https://github.com/CellarD0-0r/whatever">
+                        <a type="button" class="btn navbar-btn btn-default disabled" href="index.html">Home</a>
+                        <a type="button" class="btn navbar-btn btn-default" href="docs.html">Docs</a>
+                        <a type="button" class="btn navbar-btn btn-default" href="releases.html">Releases</a>
+                        <a type="button" class="btn navbar-btn btn-default" href="contacts.html">Contact</a>
+                        <a type="button" class="btn btn-default navbar-btn" href="https://github.com/CellarD0-0r/whatever">
                         <img src="build/GitHub-Mark-120px-plus.png" width="18px">
                         GitHub
                     </a>
@@ -56,9 +57,38 @@
                     </div>
                 </div>
             </div>
-            <div class="span12">
-                
+            <div class="span6 offset3 badge-container">
+                <span class="badge badge-pill">Electron: <b>1.4.15</b></span>
+                <span class="badge badge-pill">Node: <b>7.4.0</b></span>
+                <span class="badge badge-pill">Chromium: <b>56.0.2924.76</b></span>
+                <hr width=50%>
             </div>
+            <div class="span12 content-wrapper">
+                <h2><b>Whatever</b> is an unofficial Evernote&copy; client for Linux desktop</h2>
+                <hr width=50%>
+                <div class="span6 item-1">
+                    <img src="build/open.jpg" width="400pt" style="float: right">
+                    <h3>Open Source</h3>
+                    <p><b>Whatever</b> is 100% free, non-commercial and independent project. It is not supported by Evernote&copy; corporation or any other commercial organization.<br><br>
+                    Since <b>Whatever</b> is on active development stage, feel free to contribute and open issues on <a href="https://github.com/CellarD0-0r/whatever">GitHub</a>.
+                    </p>
+                </div>
+                <hr width=50%>
+                <div class="span6 item-2">
+                    <img src="build/electron.png" width="240pt" style="margin-left: 80pt; margin-right: 80pt; float: left">
+                    <h3>Built with <a href="https://electron.atom.io/">Electron</a></h3>
+                    <p><b>Whatever</b> is based on web-technologies and Electron framework.<br><br>
+                    Electron is an open source library developed by GitHub for building cross-platform desktop applications with HTML, CSS, and JavaScript. Electron accomplishes this by combining Chromium and Node.js into a single runtime. Therefore it provides web features and native integration at the same time.</p>
+                </div>
+                <hr width=50%>
+                <div class="span6 item-1">
+                    <img src="build/tux-158547_960_720.png" width="240pt" style="margin-left: 80pt; margin-right: 80pt; float: right">
+                    <h3>Made for Linux</h3>
+                    <p>Whereas Evernote Corporation still doesn't support Linux platform, there is a 100% freedom for third-party developers to piece it out, as it is mentioned at the official Evernote support page.<br><br>
+                    <b>Whatever</b> provides native installers for the most popular Linux distributions. Also it can be built from the source code.</p>
+                </div>
+            </div>
+            
         </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="js/bootstrap.min.js"></script>
