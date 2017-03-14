@@ -8,7 +8,10 @@
 }
 
 .github-link {
-    height: 50px;
+    font-family: 'Open Sans Light', arial;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .jumbotron {
@@ -27,10 +30,13 @@
     padding-top: 30px;
 }
 
-.btn {
-    width: 100pt;
+.btn-lg {
+    width: 120pt;
     font-size: 30pt;
     color: black;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 5px solid #228B22;
+    margin: 5px;
 }
 
 .spin-wrapper {
