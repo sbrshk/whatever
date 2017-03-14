@@ -5,13 +5,19 @@
     font-family: 'Annabelle', arial;
     padding: 0;
     margin; 0;
+    text-align: center;
+}
+
+.nav-btns {
+    font-family: 'Open Sans Light', arial;
+    position: absolute;
+    padding: 10px;
 }
 
 .github-link {
     font-family: 'Open Sans Light', arial;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    padding: 10px;
 }
 
 .jumbotron {
