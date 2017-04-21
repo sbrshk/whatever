@@ -1,3 +1,7 @@
+<h1>Issue of the day</h1>
+<p>Is there somebody else, who updated Ubuntu to 17.04, and after that lost the icon from dock?<br>
+It's not only about <b>Whatever</b>, Slack and Skype icons disappeared too. If somebody knows, what is this, please, let me know! :)</p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/app/splash/splash_background.png" width="60%">
 <h1 align="center" style="font-size: 50px; text-shadow: 5px 5px 5px #aaa">Whatever</h1>
 <p align="center"><a href="https://raw.githubusercontent.com/CellarD0-0r/whatever/master/License.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
