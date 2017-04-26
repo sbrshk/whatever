@@ -124,13 +124,14 @@ function createWindow () {
         if (mainWindow !== null ) { mainWindow = null }
   })
   
-  /*mainWindow.webContents.on('new-window', (event, url) => {
+  mainWindow.webContents.on('new-window', (event, url) => {
   // stop Electron from opening another BrowserWindow
+  
   event.preventDefault()
   // open the url in the default system browser
-  shell.openExternal(url)
-})*/
-}
+  var urlDest = url.split('=')[1]
+  shell.openExternal(decodeURIComponent(urlDest))
+})}
 
 function openSettings () {
     settingsWindow = new BrowserWindow({width: 700, 
