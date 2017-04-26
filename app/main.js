@@ -126,8 +126,7 @@ function createWindow () {
   
   mainWindow.webContents.on('new-window', (event, url) => {
   // stop Electron from opening another BrowserWindow
-  console.log('new-window')
-  console.log(url)
+  
   event.preventDefault()
   // open the url in the default system browser
   var urlDest = url.split('=')[1]
